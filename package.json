@@ -1,0 +1,25 @@
+{
+  "name": "prodigy-stale-branch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "serve": "netlify-lambda serve functions",
+    "build": "netlify-lambda build functions"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^8.0.0",
+    "netlify-lambda": "^1.4.13"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}

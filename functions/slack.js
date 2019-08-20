@@ -1,0 +1,29 @@
+const deleteBranchThenUpdateMessage = require('../src/deleteBranchThenUpdateMessage');
+
+/**
+ * Called by Slack when the delete button is clicked on a message.
+ */
+exports.handler = async function(event, context) {
+    if (event.httpMethod !== 'POST') {
+        return { statusCode: 405, body: 'Method Not Allowed' };
+    }
+
+    const { response_url, channel, message, user, actions } = JSON.parse(
+        decodeURIComponent(event.body).substring(8)
+    );
+
+    const tokens = actions[0].value.split('|');
+
+    if (tokens.length === 3) {
+        const [owner, repository, branch] = tokens;
+        await deleteBranchThenUpdateMessage({ owner, repository, branch, channel, message, user });
+    } else {
+        const [repository, branch] = tokens;
+        await deleteBranchThenUpdateMessage({ repository, branch, channel, message, user });
+    }
+
+    return {
+        statusCode: 200,
+        body: event.body
+    };
+};
