@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
+    "lint": "eslint .",
     "serve": "netlify-lambda serve functions",
     "build": "netlify-lambda build functions"
   },
@@ -17,6 +18,9 @@
     "netlify-lambda": "1.4.13"
   },
   "devDependencies": {
+    "eslint": "6.7.1",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.18.2",
     "jest": "24.8.0"
   },
   "jest": {
