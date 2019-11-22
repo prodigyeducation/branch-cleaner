@@ -28,6 +28,6 @@ describe('findStaleBranches()', () => {
         await findStaleBranches({ owner, repository });
 
         expect(filterStaleBranches).toBeCalledTimes(1);
-        expect(filterStaleBranches).toBeCalledWith(nodes);
+        expect(filterStaleBranches).toBeCalledWith({ nodes });
     });
 });
