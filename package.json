@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "serve": "netlify-lambda serve functions",
+    "serve": "netlify-lambda serve functions --config ./webpack.functions.js",
     "build": "netlify-lambda build functions"
   },
   "keywords": [],
@@ -24,7 +24,8 @@
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-prettier": "3.1.1",
     "jest": "24.8.0",
-    "prettier": "1.19.1"
+    "prettier": "1.19.1",
+    "qs": "6.9.0"
   },
   "jest": {
     "testEnvironment": "node"

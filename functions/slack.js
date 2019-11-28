@@ -1,42 +1,44 @@
 const deleteBranchThenUpdateMessage = require('../src/deleteBranchThenUpdateMessage');
+const { isAuthorized } = require('../src/slack/auth');
 
 /**
  * Called by Slack when the delete button is clicked on a message.
  */
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
 
-  const { channel, message, user, actions } = JSON.parse(
-    decodeURIComponent(event.body).substring(8),
-  );
-
-  const tokens = actions[0].value.split('|');
-
-  if (tokens.length === 3) {
-    const [owner, repository, branch] = tokens;
-    await deleteBranchThenUpdateMessage({
-      owner,
-      repository,
-      branch,
-      channel,
-      message,
-      user,
-    });
-  } else {
-    const [repository, branch] = tokens;
-    await deleteBranchThenUpdateMessage({
-      repository,
-      branch,
-      channel,
-      message,
-      user,
-    });
-  }
-
-  return {
-    statusCode: 200,
-    body: event.body,
+  if (!isAuthorized(event)) {
+    return { statusCode: 403, body: 'Verrification failed'};
   };
+  //
+  // const { channel, message, user, actions } = JSON.parse(
+  //   decodeURIComponent(event.body).substring(8),
+  // );
+  //
+  // const tokens = actions[0].value.split('|');
+  //
+  // if (tokens.length === 3) {
+  //   const [owner, repository, branch] = tokens;
+  //   await deleteBranchThenUpdateMessage({
+  //     owner,
+  //     repository,
+  //     branch,
+  //     channel,
+  //     message,
+  //     user,
+  //   });
+  // } else {
+  //   const [repository, branch] = tokens;
+  //   await deleteBranchThenUpdateMessage({
+  //     repository,
+  //     branch,
+  //     channel,
+  //     message,
+  //     user,
+  //   });
+  // }
+  //
+  // return {
+  //   statusCode: 200,
+  //   body: event.body,
+  // };
 };
