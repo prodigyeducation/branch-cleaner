@@ -1,9 +1,15 @@
 const { isAuthorized } = require('./auth');
 
-const testEvent = (timestampFail = false, signatureFail = false) => {
+const testEvent = (
+  timestampFail = false,
+  signatureFail = false,
+  httpMethodFail = false
+) => {
   return {
-    path: '/.netlify/functions/slack',
-    httpMethod: 'POST',
+    path: '/functions/slack',
+    httpMethod: httpMethodFail ?
+      'GET':
+      'POST',
     queryStringParameters: {},
     headers:
      { host: 'f8aadd49.ngrok.io',
@@ -49,7 +55,11 @@ describe('isAuthorized', () => {
     expect(isAuthorized(testEvent())).toBeTruthy();
   });
 
-  it('Returns false status on invalid signature', () => {
+  it('Returns false on invalid http request method', () => {
+    expect(isAuthorized(testEvent(httpMethodFail = true))).toBeFalsy();
+  });
+
+  it('Returns false on invalid signature', () => {
     expect(isAuthorized(testEvent(signatureFail = true))).toBeFalsy();
   });
 
