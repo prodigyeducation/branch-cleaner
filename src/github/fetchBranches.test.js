@@ -1,35 +1,35 @@
-const fetchBranches = require('./fetchBranches');
 const axios = require('axios');
+const fetchBranches = require('./fetchBranches');
 
 jest.mock('axios');
 
 test('fetchBranches() calls Github API', async () => {
-    // given
-    const owner = 'TestOwner';
-    const repository = 'test-repository';
-    axios.post.mockResolvedValue({
-        data: {
-            data: {
-                repository: {
-                    refs: {
-                        nodes: []
-                    }
-                }
-            }
-        }
-    });
+  // given
+  const owner = 'TestOwner';
+  const repository = 'test-repository';
+  axios.post.mockResolvedValue({
+    data: {
+      data: {
+        repository: {
+          refs: {
+            nodes: [],
+          },
+        },
+      },
+    },
+  });
 
-    // when
-    await fetchBranches({ owner, repository });
+  // when
+  await fetchBranches({ owner, repository });
 
-    // then
-    expect(axios.post).toBeCalledTimes(1);
+  // then
+  expect(axios.post).toBeCalledTimes(1);
 
-    const [call] = axios.post.mock.calls;
-    const [url, body, config] = call;
+  const [call] = axios.post.mock.calls;
+  const [url, body, config] = call;
 
-    expect(url).toMatch(/graphql$/);
-    expect(JSON.parse(body)).toHaveProperty('query');
-    expect(config.headers).toHaveProperty('Content-type', 'application/json; charset=utf-8');
-    expect(config.headers).toHaveProperty('Authorization');
+  expect(url).toMatch(/graphql$/);
+  expect(JSON.parse(body)).toHaveProperty('query');
+  expect(config.headers).toHaveProperty('Content-type', 'application/json; charset=utf-8');
+  expect(config.headers).toHaveProperty('Authorization');
 });

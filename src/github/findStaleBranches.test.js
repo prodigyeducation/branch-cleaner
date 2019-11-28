@@ -7,27 +7,27 @@ jest.mock('./fetchBranches');
 jest.mock('./filterStaleBranches');
 
 describe('findStaleBranches()', () => {
-    const owner = 'TestOwner';
-    const repository = 'test-repository';
+  const owner = 'TestOwner';
+  const repository = 'test-repository';
 
-    afterEach(() => {
-        fetchBranches.mockClear();
-        filterStaleBranches.mockClear();
-    });
+  afterEach(() => {
+    fetchBranches.mockClear();
+    filterStaleBranches.mockClear();
+  });
 
-    it('calls fetchBranches', async () => {
-        await findStaleBranches({ owner, repository });
+  it('calls fetchBranches', async () => {
+    await findStaleBranches({ owner, repository });
 
-        expect(fetchBranches).toBeCalledTimes(1);
-    });
+    expect(fetchBranches).toBeCalledTimes(1);
+  });
 
-    it('calls filterStaleBranches', async () => {
-        const nodes = [];
-        fetchBranches.mockResolvedValue(nodes);
+  it('calls filterStaleBranches', async () => {
+    const nodes = [];
+    fetchBranches.mockResolvedValue(nodes);
 
-        await findStaleBranches({ owner, repository });
+    await findStaleBranches({ owner, repository });
 
-        expect(filterStaleBranches).toBeCalledTimes(1);
-        expect(filterStaleBranches).toBeCalledWith({ nodes });
-    });
+    expect(filterStaleBranches).toBeCalledTimes(1);
+    expect(filterStaleBranches).toBeCalledWith({ nodes });
+  });
 });
