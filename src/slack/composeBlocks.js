@@ -1,5 +1,5 @@
 module.exports = ({ repository, branches }) => {
-  branches.map(({ name, date, user }) => {
+  return branches.map(({ name, date, user }) => {
     const link = `>*<https://github.com/SMARTeacher/${repository}/tree/${name}|${name}>*`;
     const meta = `>:alarm_clock: _${date}_ :ed: _${user.name || user.login || user.email}_`;
     return {
