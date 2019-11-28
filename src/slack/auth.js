@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const qs = require('qs');
 
 const { slack } = require('../config');
 const slackSigningSecret = slack.signingSecret;
