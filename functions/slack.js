@@ -7,9 +7,9 @@ const { isAuthorized } = require('../src/slack/auth');
 exports.handler = async (event) => {
 
   if (!isAuthorized(event)) {
-    return { statusCode: 403, body: 'Verrification failed'};
+    return { statusCode: 403, body: 'Forbidden'};
   };
-  
+
   const { channel, message, user, actions } = JSON.parse(
     decodeURIComponent(event.body).substring(8),
   );
