@@ -10,6 +10,7 @@ const {
   GITHUB_EXCLUDE,
   SLACK_ENDPOINT = 'https://slack.com/api',
   SLACK_TOKEN,
+  SLACK_SIGNING_SECRET,
 } = process.env;
 
 module.exports = {
@@ -22,5 +23,6 @@ module.exports = {
   slack: {
     endpoint: SLACK_ENDPOINT,
     token: SLACK_TOKEN,
+    signingSecret: SLACK_SIGNING_SECRET,
   },
 };

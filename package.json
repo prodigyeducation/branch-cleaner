@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "serve": "netlify-lambda serve functions",
-    "build": "netlify-lambda build functions"
+    "serve": "netlify-lambda serve functions --config ./functions/webpack.functions.js",
+    "build": "netlify-lambda build functions --config ./functions/webpack.functions.js"
   },
   "keywords": [],
   "author": "",
@@ -24,9 +24,14 @@
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-prettier": "3.1.1",
     "jest": "24.8.0",
-    "prettier": "1.19.1"
+    "jest-date-mock": "1.0.7",
+    "prettier": "1.19.1",
+    "webpack": "4.41.2"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFiles": [
+      "jest-date-mock"
+    ]
   }
 }
