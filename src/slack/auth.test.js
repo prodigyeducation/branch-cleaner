@@ -1,13 +1,11 @@
+const { advanceTo } = require('jest-date-mock');
 const { isAuthorized } = require('./auth');
 
-const testEvent = (
-  timestampFail = false,
-  signatureFail = false,
-  httpMethodFail = false
-) => {
+
+const testEvent = (testState) => {
   return {
     path: '/functions/slack',
-    httpMethod: httpMethodFail ?
+    httpMethod: testState.httpMethodFail ?
       'GET':
       'POST',
     queryStringParameters: {},
@@ -16,10 +14,10 @@ const testEvent = (
        'user-agent': 'Slackbot 1.0 (+https://api.slack.com/robots)',
        'accept-encoding': 'gzip,deflate',
        accept: 'application/json,*/*',
-       'x-slack-signature': signatureFail ?
+       'x-slack-signature': testState.signatureFail ?
         'v0=610f70e946838d43f989e53086bc4b41a02a88ed50c0ac5328abc1ec48618a4d':
         'v0=96e18a14a4bf6ba5a6613695ab18898418453b0cb19075607848a384a981d7b5',
-       'x-slack-request-timestamp': timestampFail ?
+       'x-slack-request-timestamp': testState.timestampFail ?
          '1574963968':
          '1574352073',
        'content-length': '2092',
@@ -33,37 +31,40 @@ const testEvent = (
 };
 
 describe('isAuthorized', () => {
-  const realDate = Date;
-  const testDate = new Date('2019-11-21T15:59:00.000Z');
 
-  beforeEach(() => {
-    jest.resetModules();
-    jest.clearAllMocks();
-
-    global.Date = class extends Date {
-      constructor(...args) {
-        return testDate;
-      }
-    };
-  });
-
-  afterEach(() => {
-    global.Date = realDate;
+  beforeAll(() => {
+    advanceTo(new Date('2019-11-21T15:59:00.000Z'));
   });
 
   it('Returns true on a valid request', () => {
-    expect(isAuthorized(testEvent())).toBeTruthy();
+    expect(isAuthorized(testEvent({
+      httpMethodFail: false,
+      signatureFail: false,
+      timestampFail: false
+    }))).toBeTruthy();
   });
 
   it('Returns false on invalid http request method', () => {
-    expect(isAuthorized(testEvent(httpMethodFail = true))).toBeFalsy();
+    expect(isAuthorized(testEvent({
+      httpMethodFail: true,
+      signatureFail: false,
+      timestampFail: false
+    }))).toBeFalsy();
   });
 
   it('Returns false on invalid signature', () => {
-    expect(isAuthorized(testEvent(signatureFail = true))).toBeFalsy();
+    expect(isAuthorized(testEvent({
+      httpMethodFail: false,
+      signatureFail: true,
+      timestampFail: false
+    }))).toBeFalsy();
   });
 
   it('Returns false on invalid timestamp', () => {
-    expect(isAuthorized(testEvent(timestampFail = true))).toBeFalsy();
+    expect(isAuthorized(testEvent({
+      httpMethodFail: false,
+      signatureFail: false,
+      timestampFail: true
+    }))).toBeFalsy();
   });
 });

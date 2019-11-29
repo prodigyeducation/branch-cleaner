@@ -1,12 +1,12 @@
 const crypto = require('crypto');
-
 const { slack } = require('../config');
+
 const slackSigningSecret = slack.signingSecret;
 
 const verifySignature = (sigBaseString, slackSignature) => {
-  const baseSignature = 'v0=' + crypto.createHmac('sha256', slackSigningSecret)
+  const baseSignature = `v0=${crypto.createHmac('sha256', slackSigningSecret)
       .update(sigBaseString, 'utf8')
-      .digest('hex');
+      .digest('hex')}`;
 
   if (crypto.timingSafeEqual(
       Buffer.from(baseSignature, 'utf8'),
@@ -27,7 +27,7 @@ const verifyTimestamp = (timestamp) => {
   return true;
 };
 
-module.exports.isAuthorized = (event) => {
+exports.isAuthorized = (event) => {
   const timestamp = event.headers['x-slack-request-timestamp'];
   const sigBaseString = `v0:${timestamp}:${event.body}`;
   const slackSignature = event.headers['x-slack-signature'];
@@ -36,11 +36,5 @@ module.exports.isAuthorized = (event) => {
     return false;
   };
 
-  if (verifyTimestamp(timestamp)) {
-    if (verifySignature(sigBaseString, slackSignature)) {
-      return true;
-    }
-  }
-
-  return false;
+  return verifyTimestamp(timestamp) && verifySignature(sigBaseString, slackSignature);
 };
