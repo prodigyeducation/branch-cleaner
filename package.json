@@ -15,8 +15,7 @@
   "dependencies": {
     "axios": "0.18.1",
     "dotenv": "8.0.0",
-    "netlify-lambda": "1.4.13",
-    "webpack": "^4.41.2"
+    "netlify-lambda": "1.4.13"
   },
   "devDependencies": {
     "eslint": "6.7.1",
@@ -25,8 +24,9 @@
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-prettier": "3.1.1",
     "jest": "24.8.0",
-    "jest-date-mock": "^1.0.7",
-    "prettier": "1.19.1"
+    "jest-date-mock": "1.0.7",
+    "prettier": "1.19.1",
+    "webpack": "4.41.2"
   },
   "jest": {
     "testEnvironment": "node",
