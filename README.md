@@ -55,6 +55,7 @@ Use environment variables or create `.env` file to define the following config i
 
 -   GITHUB_TOKEN
 -   SLACK_TOKEN
+-   SLACK_SIGNING_SECRET
 
 ## Commands
 
