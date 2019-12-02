@@ -4,14 +4,14 @@ const { slack } = require('../config');
 const slackSigningSecret = slack.signingSecret;
 
 const verifySignature = (sigBaseString, slackSignature) => {
-  const baseSignature = `v0=${crypto.createHmac('sha256', slackSigningSecret)
-      .update(sigBaseString, 'utf8')
-      .digest('hex')}`;
+  const baseSignature = `v0=${crypto
+    .createHmac('sha256', slackSigningSecret)
+    .update(sigBaseString, 'utf8')
+    .digest('hex')}`;
 
-  if (crypto.timingSafeEqual(
-      Buffer.from(baseSignature, 'utf8'),
-      Buffer.from(slackSignature, 'utf8')
-  )) {
+  if (
+    crypto.timingSafeEqual(Buffer.from(baseSignature, 'utf8'), Buffer.from(slackSignature, 'utf8'))
+  ) {
     return true;
   }
   return false;
@@ -20,7 +20,7 @@ const verifySignature = (sigBaseString, slackSignature) => {
 const expirationDuration = 300;
 
 const verifyTimestamp = (timestamp) => {
-  const myTime = Math.floor(new Date().getTime()/1000);
+  const myTime = Math.floor(new Date().getTime() / 1000);
   if (Math.abs(myTime - timestamp) > expirationDuration) {
     return false;
   }
@@ -34,7 +34,7 @@ exports.isAuthorized = (event) => {
 
   if (event.httpMethod !== 'POST') {
     return false;
-  };
+  }
 
   return verifyTimestamp(timestamp) && verifySignature(sigBaseString, slackSignature);
 };

@@ -1,8 +1,6 @@
-const webpack = require('webpack')
+const webpack = require('webpack');
 
 module.exports = {
-  mode: "development",
-  plugins: [
-    new webpack.DefinePlugin({ "global.GENTLY": false })
-  ],
+  mode: 'development',
+  plugins: [new webpack.DefinePlugin({ 'global.GENTLY': false })],
 };
