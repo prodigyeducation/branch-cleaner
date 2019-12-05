@@ -17,7 +17,7 @@ module.exports = {
   rules: {
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: ['**/*.test.js', 'functions/webpack.functions.js'] },
+      { devDependencies: ['**/*.test.js', 'webpack.functions.js'] },
     ],
   },
 };
