@@ -2,59 +2,81 @@ const filterStaleBranches = require('./filterStaleBranches');
 
 jest.mock('axios');
 
-test('filterStaleBranches() excludes specifed branches', async () => {
-  // given
-  const past = new Date();
-  past.setMonth(past.getMonth() - 4);
+describe('filterStaleBranches()', () => {
+  let past;
 
-  const nodes = ['bugfix/foo', 'bugfix/bar', 'develop', 'feature/foo', 'feature/bar', 'master'].map(
-    (name) => ({
-      name,
-      target: {
-        committedDate: past.toISOString(),
-        author: { user: {} },
-      },
-    }),
-  );
-  const excludedBranches = ['master', 'develop'];
+  beforeEach(() => {
+    past = new Date();
+    past.setMonth(past.getMonth() - 4);
+  });
 
-  // when
-  const branches = filterStaleBranches({ nodes, excludedBranches });
+  describe('excludes', () => {
+    let nodes;
+    beforeEach(() => {
+      // given
+      nodes = ['bugfix/foo', 'bugfix/bar', 'develop', 'feature/foo', 'feature/bar', 'master'].map(
+        (name) => ({
+          name,
+          target: {
+            committedDate: past.toISOString(),
+            author: { user: {} },
+          },
+        })
+      );
+    });
 
-  // then
-  expect(branches.map(({ name }) => name)).toEqual(expect.not.arrayContaining(excludedBranches));
-});
+    it('default branch', async () => {
+      const defaultBranchName = 'master';
+      // when
+      const branches = filterStaleBranches({ nodes, defaultBranchName });
 
-test('filterStaleBranches() filter by committed date', async () => {
-  // given
-  const past = new Date();
-  past.setMonth(past.getMonth() - 4);
+      // then
+      expect(branches.map(({ name }) => name)).toEqual(
+        expect.not.arrayContaining([defaultBranchName])
+      );
+    });
 
-  const staleBranches = ['stale-1', 'stale-2'];
-  const freshBranches = ['fresh-1', 'fresh-2', 'fresh-3'];
+    it('specifed branches', async () => {
+      const excludedBranches = ['develop'];
 
-  const nodes = [
-    ...staleBranches.map((name) => ({
-      name,
-      target: {
-        committedDate: past.toISOString(),
-        author: { user: {} },
-      },
-    })),
-    ...freshBranches.map((name) => ({
-      name,
-      target: {
-        committedDate: new Date().toISOString(),
-        author: { user: {} },
-      },
-    })),
-  ];
+      // when
+      const branches = filterStaleBranches({ nodes, excludedBranches });
 
-  // when
-  const branches = filterStaleBranches({ nodes });
+      // then
+      expect(branches.map(({ name }) => name)).toEqual(
+        expect.not.arrayContaining(excludedBranches)
+      );
+    });
+  });
 
-  // then
-  expect(branches.map(({ name }) => name)).toEqual(expect.arrayContaining(staleBranches));
+  it('filters by committed date', async () => {
+    // given
+    const staleBranches = ['stale-1', 'stale-2'];
+    const freshBranches = ['fresh-1', 'fresh-2', 'fresh-3'];
 
-  expect(branches.map(({ name }) => name)).toEqual(expect.not.arrayContaining(freshBranches));
+    const nodes = [
+      ...staleBranches.map((name) => ({
+        name,
+        target: {
+          committedDate: past.toISOString(),
+          author: { user: {} },
+        },
+      })),
+      ...freshBranches.map((name) => ({
+        name,
+        target: {
+          committedDate: new Date().toISOString(),
+          author: { user: {} },
+        },
+      })),
+    ];
+
+    // when
+    const branches = filterStaleBranches({ nodes });
+
+    // then
+    expect(branches.map(({ name }) => name)).toEqual(expect.arrayContaining(staleBranches));
+
+    expect(branches.map(({ name }) => name)).toEqual(expect.not.arrayContaining(freshBranches));
+  });
 });

@@ -11,6 +11,9 @@ test('fetchBranches() calls Github API', async () => {
     data: {
       data: {
         repository: {
+          defaultBranchRef: {
+            name: 'master',
+          },
           refs: {
             nodes: [],
           },
