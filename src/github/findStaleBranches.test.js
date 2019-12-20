@@ -10,10 +10,10 @@ describe('findStaleBranches()', () => {
   const owner = 'TestOwner';
   const repository = 'test-repository';
   const nodes = [];
-  const defaultBranchName = 'master';
+  const defaultBranch = 'master';
 
   beforeEach(() => {
-    fetchBranches.mockResolvedValue({ nodes, defaultBranchName });
+    fetchBranches.mockResolvedValue({ nodes, defaultBranch });
   });
 
   afterEach(() => {
@@ -31,6 +31,6 @@ describe('findStaleBranches()', () => {
     await findStaleBranches({ owner, repository });
 
     expect(filterStaleBranches).toBeCalledTimes(1);
-    expect(filterStaleBranches).toBeCalledWith({ nodes, defaultBranchName });
+    expect(filterStaleBranches).toBeCalledWith({ nodes, defaultBranch });
   });
 });

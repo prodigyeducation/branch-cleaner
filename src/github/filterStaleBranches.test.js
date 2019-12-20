@@ -26,13 +26,13 @@ describe('filterStaleBranches()', () => {
     });
 
     it('default branch', async () => {
-      const defaultBranchName = 'master';
+      const defaultBranch = 'master';
       // when
-      const branches = filterStaleBranches({ nodes, defaultBranchName });
+      const branches = filterStaleBranches({ nodes, defaultBranch });
 
       // then
       expect(branches.map(({ name }) => name)).toEqual(
-        expect.not.arrayContaining([defaultBranchName])
+        expect.not.arrayContaining([defaultBranch])
       );
     });
 

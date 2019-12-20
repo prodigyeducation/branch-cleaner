@@ -45,5 +45,5 @@ module.exports = async ({ owner = github.owner, repository }) => {
     },
   } = response.data.data;
 
-  return { nodes, defaultBranchName: name };
+  return { nodes, defaultBranch: name };
 };
