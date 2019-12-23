@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "start": "npm run serve",
     "test": "jest",
     "lint": "eslint .",
     "serve": "netlify-lambda serve functions --config ./webpack.functions.js",
