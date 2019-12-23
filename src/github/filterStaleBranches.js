@@ -1,6 +1,5 @@
 const { github } = require('../config');
 
-// filters stale, default and excluded branches
 module.exports = ({ nodes, defaultBranch = null, excludedBranches = github.exclude }) => {
   const past = new Date();
   past.setMonth(past.getMonth() - 3);

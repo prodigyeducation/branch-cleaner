@@ -6,7 +6,7 @@ module.exports = async ({ owner = github.owner, repository }) => {
   const query = `{
         repository(name: "${repository}", owner: "${owner}") {
           defaultBranchRef {
-            name
+            defaultBranch: name
           }
           refs(first: 100, refPrefix: "refs/heads/") {
             nodes {
@@ -38,12 +38,10 @@ module.exports = async ({ owner = github.owner, repository }) => {
 
   const {
     repository: {
-      defaultBranchRef: {
-        name
-      },
+      defaultBranchRef: { defaultBranch },
       refs: { nodes },
     },
   } = response.data.data;
 
-  return { nodes, defaultBranch: name };
+  return { nodes, defaultBranch };
 };
