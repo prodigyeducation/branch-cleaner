@@ -9,6 +9,12 @@ jest.mock('./filterStaleBranches');
 describe('findStaleBranches()', () => {
   const owner = 'TestOwner';
   const repository = 'test-repository';
+  const nodes = [];
+  const defaultBranch = 'master';
+
+  beforeEach(() => {
+    fetchBranches.mockResolvedValue({ nodes, defaultBranch });
+  });
 
   afterEach(() => {
     fetchBranches.mockClear();
@@ -22,12 +28,9 @@ describe('findStaleBranches()', () => {
   });
 
   it('calls filterStaleBranches', async () => {
-    const nodes = [];
-    fetchBranches.mockResolvedValue(nodes);
-
     await findStaleBranches({ owner, repository });
 
     expect(filterStaleBranches).toBeCalledTimes(1);
-    expect(filterStaleBranches).toBeCalledWith({ nodes });
+    expect(filterStaleBranches).toBeCalledWith({ nodes, defaultBranch });
   });
 });

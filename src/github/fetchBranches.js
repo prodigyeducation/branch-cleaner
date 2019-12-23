@@ -5,6 +5,9 @@ module.exports = async ({ owner = github.owner, repository }) => {
   const url = `${github.endpoint}/graphql`;
   const query = `{
         repository(name: "${repository}", owner: "${owner}") {
+          defaultBranchRef {
+            defaultBranch: name
+          }
           refs(first: 100, refPrefix: "refs/heads/") {
             nodes {
               name
@@ -35,9 +38,10 @@ module.exports = async ({ owner = github.owner, repository }) => {
 
   const {
     repository: {
+      defaultBranchRef: { defaultBranch },
       refs: { nodes },
     },
   } = response.data.data;
 
-  return nodes;
+  return { nodes, defaultBranch };
 };

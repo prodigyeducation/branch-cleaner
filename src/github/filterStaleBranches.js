@@ -1,12 +1,12 @@
 const { github } = require('../config');
 
-module.exports = ({ nodes, excludedBranches = github.exclude }) => {
+module.exports = ({ nodes, defaultBranch = null, excludedBranches = github.exclude }) => {
   const past = new Date();
   past.setMonth(past.getMonth() - 3);
 
   const staleBranches = nodes
     .filter(({ target: { committedDate } }) => Date.parse(committedDate) < past)
-    .filter(({ name }) => !excludedBranches.includes(name));
+    .filter(({ name }) => ![...excludedBranches, defaultBranch].filter(Boolean).includes(name));
 
   staleBranches.sort((a, b) => a.target.committedDate.localeCompare(b.target.committedDate));
 
