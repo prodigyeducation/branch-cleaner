@@ -24,7 +24,7 @@ Branch Cleaner is a very simple solution for preventing your repositories from b
 This Slack bot reminds you of unused branches and enable you to delete them right away on Slack.
 It encourages developers to be aware of branches that they forgot to delete and get into the habit of cleaning up repositories themselves.
 
-![ScreenShot](./ScreenShot.png)
+![ScreenShot](./docs/Screenshot.png)
 
 ### How it works?
 
