@@ -49,13 +49,9 @@ curl "http://localhost:9000/remind?owner=<owner>&repository=<repository>&channel
 curl -X POST "http://localhost:9000/slack" -d "<slack request payload>"
 ```
 
-## Configurations
+## How to use?
 
-Use environment variables or create `.env` file to define the following config items.
-
--   GITHUB_TOKEN
--   SLACK_TOKEN
--   SLACK_SIGNING_SECRET
+Please see [the documentation on usage](./docs/USAGE.md).
 
 ## Commands
 
