@@ -1,3 +1,5 @@
+![CI](https://github.com/prodigyeducation/branch-cleaner/workflows/CI/badge.svg)
+
 # Branch Cleaner
 
 > Be aware of branches that you forgot to delete.
@@ -14,9 +16,9 @@ However, in reality, it takes some time and energy to make sure unused branches 
 
 ### Why we easily forget to delete them?
 
--   Developers just forget to delete it once the branch is merged or forget about temporary branches that they created for experiment or research.
--   Branches are not always merged not by the developer. It can be merged by a QA or another developer and they hesitate to delete others' branches.
--   When someone leaves your team/organization, he or she often leaves all of his branches uncleaned.
+- Developers just forget to delete it once the branch is merged or forget about temporary branches that they created for experiment or research.
+- Branches are not always merged not by the developer. It can be merged by a QA or another developer and they hesitate to delete others' branches.
+- When someone leaves your team/organization, he or she often leaves all of his branches uncleaned.
 
 ## Solution
 
@@ -30,20 +32,20 @@ It encourages developers to be aware of branches that they forgot to delete and 
 
 This Slack bot does the following tasks travelling back and forth between [Github API](https://api.github.com) and [Slack API](https://api.slack.com/).
 
--   Fetch all branches of a repository from Github.
--   Search for unused branches and order them with the oldest ones first.
--   Post messages containing the detail on unused branches and a delete button to the channel of your choice on Slack.
--   When the delete button on a message is clicked, delete the branch from the Github repository and then update the Slack message.
+- Fetch all branches of a repository from Github.
+- Search for unused branches and order them with the oldest ones first.
+- Post messages containing the detail on unused branches and a delete button to the channel of your choice on Slack.
+- When the delete button on a message is clicked, delete the branch from the Github repository and then update the Slack message.
 
 ## API (Serverless functions)
 
--   Remind of unused branches on slack. (Schedule it to be triggered regularly and also can call it manually.)
+- Remind of unused branches on slack. (Schedule it to be triggered regularly and also can call it manually.)
 
 ```sh
 curl "http://localhost:9000/remind?owner=<owner>&repository=<repository>&channel=<channel>"
 ```
 
--   Delete branch and then update the message. (Called by Slack when the delete button is clicked on a message.)
+- Delete branch and then update the message. (Called by Slack when the delete button is clicked on a message.)
 
 ```sh
 curl -X POST "http://localhost:9000/slack" -d "<slack request payload>"
