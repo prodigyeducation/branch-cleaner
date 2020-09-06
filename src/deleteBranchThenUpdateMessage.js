@@ -1,5 +1,5 @@
 const { deleteBranch } = require('./github');
-const { feedbackMessageV1, feedbackMessageV2 } = require('./slack/feedbackMessage');
+const feedbackMessage = require('./slack/feedbackMessage');
 
 // eslint-disable-next-line object-curly-newline
 module.exports = async ({ owner, repository, branch, channel, message, user }) => {
@@ -18,18 +18,12 @@ module.exports = async ({ owner, repository, branch, channel, message, user }) =
     }
   }
 
-  // keep this for the time being for backward compatibility
-  if (message.ts.substr(0, 10).localeCompare('1559365200') < 0) {
-    // eslint-disable-next-line object-curly-newline
-    await feedbackMessageV1({ channel, user, repository, branch, result });
-  } else {
-    await feedbackMessageV2({
-      channel,
-      message,
-      user,
-      repository,
-      branch,
-      result,
-    });
-  }
+  await feedbackMessage({
+    channel,
+    message,
+    user,
+    repository,
+    branch,
+    result,
+  });
 };

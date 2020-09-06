@@ -1,31 +1,7 @@
 /* eslint-disable */
-const { postMessage, update } = require('./chat');
+const { update } = require('./chat');
 
-exports.feedbackMessageV1 = async ({ channel, user, branch, result }) => {
-  let text;
-  if (result === 'S') {
-    text = `<@${user.id}> Thanks for deleting *${branch}*! :100:`;
-  } else if (result === 'A') {
-    text = `<@${user.id}> Sorry but someone else has already deleted *${branch}*. :wink:`;
-  } else {
-    text = `<@${user.id}> Oops! failed to delete *${branch}* due to an error. :skull:`;
-  }
-
-  await postMessage({
-    channel: channel.id,
-    type: 'mrkdwn',
-    text,
-  });
-};
-
-exports.feedbackMessageV2 = async ({
-  channel,
-  message: { ts, blocks },
-  user,
-  repository,
-  branch,
-  result,
-}) => {
+module.exports = async ({ channel, message: { ts, blocks }, user, repository, branch, result }) => {
   let text;
   if (result === 'S') {
     text = `>~*${branch}*~\n>💯 _Deleted by <@${user.id}>_`;
