@@ -1,6 +1,6 @@
 const deleteBranchThenUpdateMessage = require('./deleteBranchThenUpdateMessage');
 const { deleteBranch } = require('./github');
-const { feedbackMessageV1, feedbackMessageV2 } = require('./slack/feedbackMessage');
+const feedbackMessage = require('./slack/feedbackMessage');
 
 jest.mock('./github');
 jest.mock('./slack/feedbackMessage');
@@ -18,8 +18,7 @@ describe('deleteBranchThenUpdateMessage', () => {
 
   beforeEach(() => {
     deleteBranch.mockClear();
-    feedbackMessageV1.mockClear();
-    feedbackMessageV2.mockClear();
+    feedbackMessage.mockClear();
   });
 
   it('deletes branch with owner, repository and branch', async () => {
@@ -36,7 +35,7 @@ describe('deleteBranchThenUpdateMessage', () => {
     await deleteBranchThenUpdateMessage({ owner, repository, branch, channel, message, user });
 
     // then
-    expect(feedbackMessageV2).toBeCalledWith({
+    expect(feedbackMessage).toBeCalledWith({
       channel,
       message,
       user,
@@ -57,7 +56,7 @@ describe('deleteBranchThenUpdateMessage', () => {
     await deleteBranchThenUpdateMessage({ owner, repository, branch, channel, message, user });
 
     // then
-    expect(feedbackMessageV2).toBeCalledWith({
+    expect(feedbackMessage).toBeCalledWith({
       channel,
       message,
       user,
@@ -78,7 +77,7 @@ describe('deleteBranchThenUpdateMessage', () => {
     await deleteBranchThenUpdateMessage({ owner, repository, branch, channel, message, user });
 
     // then
-    expect(feedbackMessageV2).toBeCalledWith({
+    expect(feedbackMessage).toBeCalledWith({
       channel,
       message,
       user,
@@ -86,16 +85,5 @@ describe('deleteBranchThenUpdateMessage', () => {
       branch,
       result: 'F',
     });
-  });
-
-  it('post a new message for feedback instead of updating the existing one if the message is old', async () => {
-    message.ts = '1550000000.001100';
-
-    // when
-    await deleteBranchThenUpdateMessage({ owner, repository, branch, channel, message, user });
-
-    // then
-    expect(feedbackMessageV1).toBeCalledTimes(1);
-    expect(feedbackMessageV2).not.toBeCalled();
   });
 });
