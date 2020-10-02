@@ -1,10 +1,17 @@
 const { postMessage } = require('./chat');
 const composeBlocks = require('./composeBlocks');
 
-module.exports = async ({ channel, repository, branches }) => {
+const normalHeaderMessage = ({ branches, repository }) =>
+  `<!here> There are *${branches.length}* stale branches in *${repository}*! Click the delete button if the branch is no longer used. :do_not_litter:`;
+const zeroStaleHeaderMessage = ({ repository }) =>
+  `🎊 There are *ZERO* stale branches in *${repository}*!👏`;
+
+const defaultFunction = async ({ channel, repository, branches }) => {
   const header = {
     type: 'mrkdwn',
-    text: `<!here> There are *${branches.length}* stale branches in *${repository}*! Click the delete button if the branch is no longer used. :do_not_litter:`,
+    text: branches.length
+      ? normalHeaderMessage({ branches, repository })
+      : zeroStaleHeaderMessage({ repository }),
   };
 
   const headerBlocks = [
@@ -25,11 +32,11 @@ module.exports = async ({ channel, repository, branches }) => {
 
   const blocks = composeBlocks({ repository, branches });
 
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < blocks.length; i++) {
-    // eslint-disable-next-line no-await-in-loop
-    await postMessage({ channel, blocks: [blocks[i]] });
-  }
+  blocks.forEach((block) => postMessage({ channel, blocks: [block] }));
 
   return response;
 };
+
+module.exports = defaultFunction;
+module.exports.normalHeaderMessage = normalHeaderMessage;
+module.exports.zeroStaleHeaderMessage = zeroStaleHeaderMessage;
