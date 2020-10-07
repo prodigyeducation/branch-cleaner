@@ -48,9 +48,6 @@ describe('publishMessages', () => {
               text: zeroStaleHeaderMessage({ repository }),
             },
           },
-          {
-            type: 'divider',
-          },
         ],
       });
     });

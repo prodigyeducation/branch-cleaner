@@ -6,7 +6,7 @@ const normalHeaderMessage = ({ branches, repository }) =>
 const zeroStaleHeaderMessage = ({ repository }) =>
   `🎊 There are *ZERO* stale branches in *${repository}*!👏`;
 
-const defaultFunction = async ({ channel, repository, branches }) => {
+const publishMessages = async ({ channel, repository, branches }) => {
   const header = {
     type: 'mrkdwn',
     text: branches.length
@@ -19,9 +19,13 @@ const defaultFunction = async ({ channel, repository, branches }) => {
       type: 'section',
       text: header,
     },
-    {
-      type: 'divider',
-    },
+    ...(branches.length
+      ? [
+          {
+            type: 'divider',
+          },
+        ]
+      : []),
   ];
 
   const response = await postMessage({
@@ -31,12 +35,16 @@ const defaultFunction = async ({ channel, repository, branches }) => {
   });
 
   const blocks = composeBlocks({ repository, branches });
-
-  blocks.forEach((block) => postMessage({ channel, blocks: [block] }));
+  // forEach can't be used here because the messages will show up out of order in Slack
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < blocks.length; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await postMessage({ channel, blocks: [blocks[i]] });
+  }
 
   return response;
 };
 
-module.exports = defaultFunction;
+module.exports = publishMessages;
 module.exports.normalHeaderMessage = normalHeaderMessage;
 module.exports.zeroStaleHeaderMessage = zeroStaleHeaderMessage;
