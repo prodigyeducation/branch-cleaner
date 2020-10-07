@@ -14,15 +14,12 @@ describe('publishMessages', () => {
   afterEach(() => {
     postMessage.mockClear();
   });
-  afterAll(() => {
+  afterEach(() => {
     composeBlocks.mockClear();
   });
 
   describe('when there 0 stale branches', () => {
     const branches = [];
-    beforeAll(() => {
-      composeBlocks.mockReturnValue([]);
-    });
     it('only posts exactly one message', async () => {
       // when
       await publishMessages({ channel, repository, branches });
@@ -51,6 +48,11 @@ describe('publishMessages', () => {
         ],
       });
     });
+
+    it('does not compose blocks', async () => {
+      await publishMessages({ channel, repository, branches });
+      expect(composeBlocks).toBeCalledTimes(0);
+    });
   });
   describe('when there are 1 or more stale branches', () => {
     const branches = [1, 2].map((num) => ({
@@ -76,6 +78,11 @@ describe('publishMessages', () => {
 
       // then
       expect(postMessage).toBeCalledTimes(branches.length + 1);
+    });
+
+    it('composes blocks', async () => {
+      await publishMessages({ channel, repository, branches });
+      expect(composeBlocks).toBeCalledTimes(1);
     });
 
     it('posts normal header message', async () => {

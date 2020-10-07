@@ -34,12 +34,15 @@ const publishMessages = async ({ channel, repository, branches }) => {
     blocks: headerBlocks,
   });
 
-  const blocks = composeBlocks({ repository, branches });
-  // forEach can't be used here because the messages will show up out of order in Slack
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < blocks.length; i++) {
-    // eslint-disable-next-line no-await-in-loop
-    await postMessage({ channel, blocks: [blocks[i]] });
+  if (branches.length) {
+    const blocks = composeBlocks({ repository, branches });
+
+    // forEach can't be used here because the messages will show up out of order in Slack
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < blocks.length; i++) {
+      // eslint-disable-next-line no-await-in-loop
+      await postMessage({ channel, blocks: [blocks[i]] });
+    }
   }
 
   return response;
