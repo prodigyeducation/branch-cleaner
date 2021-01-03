@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { update } from './chat';
 
-module.exports = async ({ channel, message: { ts, blocks }, user, repository, branch, result }) => {
+export default async ({ channel, message: { ts, blocks }, user, repository, branch, result }) => {
   let text;
   if (result === 'S') {
     text = `>~*${branch}*~\n>💯 _Deleted by <@${user.id}>_`;

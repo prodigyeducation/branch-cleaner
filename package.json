@@ -8,8 +8,8 @@
     "start": "npm run serve",
     "test": "jest",
     "lint": "eslint .",
-    "serve": "netlify-lambda serve functions --config ./webpack.functions.js",
-    "build": "netlify-lambda build functions --config ./webpack.functions.js"
+    "serve": "netlify-lambda serve functions --config ./webpack.functions.cjs",
+    "build": "netlify-lambda build functions --config ./webpack.functions.cjs"
   },
   "keywords": [],
   "author": "",

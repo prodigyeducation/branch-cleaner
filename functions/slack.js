@@ -4,13 +4,14 @@ const { isAuthorized } = require('../src/slack/auth');
 /**
  * Called by Slack when the delete button is clicked on a message.
  */
-exports.handler = async (event) => {
+// eslint-disable-next-line import/prefer-default-export
+export async function handler(event) {
   if (!isAuthorized(event)) {
     return { statusCode: 403, body: 'Forbidden' };
   }
 
   const { channel, message, user, actions } = JSON.parse(
-    decodeURIComponent(event.body).substring(8),
+    decodeURIComponent(event.body).substring(8)
   );
 
   const tokens = actions[0].value.split('|');
@@ -40,4 +41,4 @@ exports.handler = async (event) => {
     statusCode: 200,
     body: event.body,
   };
-};
+}
