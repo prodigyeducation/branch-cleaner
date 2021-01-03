@@ -1,8 +1,7 @@
-const { deleteBranch } = require('./github');
-const feedbackMessage = require('./slack/feedbackMessage');
+import { deleteBranch } from './github';
+import feedbackMessage from './slack/feedbackMessage';
 
-// eslint-disable-next-line object-curly-newline
-module.exports = async ({ owner, repository, branch, channel, message, user }) => {
+export default async ({ owner, repository, branch, channel, message, user }) => {
   let result;
   try {
     await deleteBranch({ owner, repository, branch });

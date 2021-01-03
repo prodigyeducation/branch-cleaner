@@ -1,6 +1,6 @@
-const remindOfStaleBranches = require('./remindOfStaleBranches');
-const { findStaleBranches } = require('./github');
-const publishMessages = require('./slack/publishMessages');
+import remindOfStaleBranches from './remindOfStaleBranches';
+import { findStaleBranches } from './github';
+import publishMessages from './slack/publishMessages';
 
 jest.mock('./github');
 jest.mock('./slack/publishMessages');

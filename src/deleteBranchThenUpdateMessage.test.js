@@ -1,6 +1,6 @@
-const deleteBranchThenUpdateMessage = require('./deleteBranchThenUpdateMessage');
-const { deleteBranch } = require('./github');
-const feedbackMessage = require('./slack/feedbackMessage');
+import deleteBranchThenUpdateMessage from './deleteBranchThenUpdateMessage';
+import { deleteBranch } from './github';
+import feedbackMessage from './slack/feedbackMessage';
 
 jest.mock('./github');
 jest.mock('./slack/feedbackMessage');
