@@ -1,7 +1,7 @@
-const axios = require('axios');
-const { github } = require('../config');
+import axios from 'axios';
+import { github } from '../config';
 
-module.exports = ({ owner = github.owner, repository, branch }) => {
+export default ({ owner = github.owner, repository, branch }) => {
   const url = `${github.endpoint}/repos/${owner}/${repository}/git/refs/heads/${branch}`;
 
   const headers = {

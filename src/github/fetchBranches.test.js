@@ -1,5 +1,5 @@
-const axios = require('axios');
-const fetchBranches = require('./fetchBranches');
+import axios from 'axios';
+import fetchBranches from './fetchBranches';
 
 jest.mock('axios');
 
