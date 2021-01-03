@@ -1,7 +1,6 @@
-const publishMessages = require('./publishMessages');
-const { zeroStaleHeaderMessage, normalHeaderMessage } = require('./publishMessages');
-const { postMessage } = require('./chat');
-const composeBlocks = require('./composeBlocks');
+import publishMessages, { zeroStaleHeaderMessage, normalHeaderMessage } from './publishMessages';
+import { postMessage } from './chat';
+import composeBlocks from './composeBlocks';
 
 jest.mock('./chat');
 jest.mock('./composeBlocks');

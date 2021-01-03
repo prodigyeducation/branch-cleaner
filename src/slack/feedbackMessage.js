@@ -1,5 +1,5 @@
 /* eslint-disable */
-const { update } = require('./chat');
+import { update } from './chat';
 
 module.exports = async ({ channel, message: { ts, blocks }, user, repository, branch, result }) => {
   let text;

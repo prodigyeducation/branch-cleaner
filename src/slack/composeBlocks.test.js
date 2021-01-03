@@ -1,4 +1,4 @@
-const composeBlocks = require('./composeBlocks');
+import composeBlocks from './composeBlocks';
 
 test('composeBlocks', () => {
   const repository = 'test-repository';
