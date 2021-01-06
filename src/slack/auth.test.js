@@ -1,5 +1,5 @@
-const { advanceTo } = require('jest-date-mock');
-const { isAuthorized } = require('./auth');
+import { advanceTo } from 'jest-date-mock';
+import { isAuthorized } from './auth';
 
 const testEvent = (testState) => {
   return {
@@ -38,8 +38,8 @@ describe('isAuthorized', () => {
           httpMethodFail: false,
           signatureFail: false,
           timestampFail: false,
-        }),
-      ),
+        })
+      )
     ).toBeTruthy();
   });
 
@@ -50,8 +50,8 @@ describe('isAuthorized', () => {
           httpMethodFail: true,
           signatureFail: false,
           timestampFail: false,
-        }),
-      ),
+        })
+      )
     ).toBeFalsy();
   });
 
@@ -62,8 +62,8 @@ describe('isAuthorized', () => {
           httpMethodFail: false,
           signatureFail: true,
           timestampFail: false,
-        }),
-      ),
+        })
+      )
     ).toBeFalsy();
   });
 
@@ -74,8 +74,8 @@ describe('isAuthorized', () => {
           httpMethodFail: false,
           signatureFail: false,
           timestampFail: true,
-        }),
-      ),
+        })
+      )
     ).toBeFalsy();
   });
 });

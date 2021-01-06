@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { postMessage, update } = require('./chat');
+import axios from 'axios';
+import { postMessage, update } from './chat';
 
 jest.mock('axios');
 

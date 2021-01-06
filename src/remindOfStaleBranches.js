@@ -1,7 +1,7 @@
-const { findStaleBranches } = require('./github');
-const publishMessages = require('./slack/publishMessages');
+import { findStaleBranches } from './github';
+import publishMessages from './slack/publishMessages';
 
-module.exports = async ({ owner, repository, channel }) => {
+export default async ({ owner, repository, channel }) => {
   try {
     const branches = await findStaleBranches({ owner, repository });
     return await publishMessages({ channel, repository, branches });

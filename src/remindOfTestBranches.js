@@ -1,4 +1,4 @@
-const publishMessages = require('./slack/publishMessages');
+import publishMessages from './slack/publishMessages';
 
 const TEST_BRANCHES = [
   {
@@ -18,7 +18,7 @@ const TEST_BRANCHES = [
   },
 ];
 
-module.exports = async ({ repository, channel }) => {
+export default async ({ repository, channel }) => {
   try {
     return await publishMessages({ channel, repository, branches: TEST_BRANCHES });
   } catch (err) {

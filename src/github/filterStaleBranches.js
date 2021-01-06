@@ -1,6 +1,6 @@
-const { github } = require('../config');
+import { github } from '../config';
 
-module.exports = ({ nodes, defaultBranch = null, excludedBranches = github.exclude }) => {
+export default ({ nodes, defaultBranch = null, excludedBranches = github.exclude }) => {
   const past = new Date();
   past.setMonth(past.getMonth() - 3);
 

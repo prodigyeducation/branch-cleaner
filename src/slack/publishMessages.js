@@ -1,5 +1,5 @@
-const { postMessage } = require('./chat');
-const composeBlocks = require('./composeBlocks');
+import { postMessage } from './chat';
+import composeBlocks from './composeBlocks';
 
 const normalHeaderMessage = ({ branches, repository }) =>
   `<!here> There are *${branches.length}* stale branches in *${repository}*! Click the delete button if the branch is no longer used. :do_not_litter:`;
@@ -48,6 +48,5 @@ const publishMessages = async ({ channel, repository, branches }) => {
   return response;
 };
 
-module.exports = publishMessages;
-module.exports.normalHeaderMessage = normalHeaderMessage;
-module.exports.zeroStaleHeaderMessage = zeroStaleHeaderMessage;
+export default publishMessages;
+export { normalHeaderMessage, zeroStaleHeaderMessage };

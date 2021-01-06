@@ -1,12 +1,12 @@
-const remindOfStaleBranches = require('../src/remindOfStaleBranches');
-const remindOfTestBranches = require('../src/remindOfTestBranches');
+import remindOfStaleBranches from '../src/remindOfStaleBranches';
+import remindOfTestBranches from '../src/remindOfTestBranches';
 
-exports.handler = async (event) => {
+// eslint-disable-next-line import/prefer-default-export
+export async function handler(event) {
   if (event.httpMethod !== 'GET') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  // eslint-disable-next-line object-curly-newline
   const { owner, repository, channel, test } = event.queryStringParameters;
   let response;
   if (test) {
@@ -18,4 +18,4 @@ exports.handler = async (event) => {
     statusCode: response.status,
     body: JSON.stringify(response.data),
   };
-};
+}

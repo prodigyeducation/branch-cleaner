@@ -1,13 +1,12 @@
-const axios = require('axios');
-const { slack } = require('../config');
+import axios from 'axios';
+import { slack } from '../config';
 
 const headers = {
   'Content-type': 'application/json; charset=utf-8',
   Authorization: `Bearer ${slack.token}`,
 };
 
-// eslint-disable-next-line object-curly-newline
-exports.postMessage = ({ channel, type, text, blocks }) => {
+export const postMessage = ({ channel, type, text, blocks }) => {
   const url = `${slack.endpoint}/chat.postMessage`;
   const body = JSON.stringify({
     channel,
@@ -18,7 +17,7 @@ exports.postMessage = ({ channel, type, text, blocks }) => {
   return axios.post(url, body, { headers });
 };
 
-exports.update = ({ ts, channel, type, text, blocks }) => {
+export const update = ({ ts, channel, type, text, blocks }) => {
   const url = `${slack.endpoint}/chat.update`;
   const body = JSON.stringify({
     ts,

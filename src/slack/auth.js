@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const { slack } = require('../config');
+import crypto from 'crypto';
+import { slack } from '../config';
 
 const slackSigningSecret = slack.signingSecret;
 
@@ -27,7 +27,8 @@ const verifyTimestamp = (timestamp) => {
   return true;
 };
 
-exports.isAuthorized = (event) => {
+// eslint-disable-next-line import/prefer-default-export
+export const isAuthorized = (event) => {
   const timestamp = event.headers['x-slack-request-timestamp'];
   const sigBaseString = `v0:${timestamp}:${event.body}`;
   const slackSignature = event.headers['x-slack-signature'];

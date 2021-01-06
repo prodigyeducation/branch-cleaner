@@ -1,7 +1,7 @@
-const axios = require('axios');
-const { github } = require('../config');
+import axios from 'axios';
+import { github } from '../config';
 
-module.exports = async ({ owner = github.owner, repository }) => {
+export default async ({ owner = github.owner, repository }) => {
   const url = `${github.endpoint}/graphql`;
   const query = `{
         repository(name: "${repository}", owner: "${owner}") {

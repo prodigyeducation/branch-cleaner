@@ -1,5 +1,7 @@
-const path = require('path');
-require('dotenv').config({
+import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config({
   path: path.join(process.cwd(), `${process.env.NODE_ENV === 'test' ? 'test' : ''}.env`),
 });
 
@@ -13,16 +15,15 @@ const {
   SLACK_SIGNING_SECRET,
 } = process.env;
 
-module.exports = {
-  github: {
-    endpoint: GITHUB_ENDPOINT,
-    token: GITHUB_TOKEN,
-    owner: GITHUB_OWNER,
-    exclude: GITHUB_EXCLUDE ? GITHUB_EXCLUDE.trim().split(',') : [],
-  },
-  slack: {
-    endpoint: SLACK_ENDPOINT,
-    token: SLACK_TOKEN,
-    signingSecret: SLACK_SIGNING_SECRET,
-  },
+export const github = {
+  endpoint: GITHUB_ENDPOINT,
+  token: GITHUB_TOKEN,
+  owner: GITHUB_OWNER,
+  exclude: GITHUB_EXCLUDE ? GITHUB_EXCLUDE.trim().split(',') : [],
+};
+
+export const slack = {
+  endpoint: SLACK_ENDPOINT,
+  token: SLACK_TOKEN,
+  signingSecret: SLACK_SIGNING_SECRET,
 };

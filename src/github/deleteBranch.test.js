@@ -1,5 +1,5 @@
-const axios = require('axios');
-const deleteBranch = require('./deleteBranch');
+import axios from 'axios';
+import deleteBranch from './deleteBranch';
 
 jest.mock('axios');
 

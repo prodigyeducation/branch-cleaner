@@ -1,4 +1,4 @@
-module.exports = ({ repository, branches }) => {
+export default ({ repository, branches }) => {
   return branches.map(({ name, date, user }) => {
     const link = `>*<https://github.com/SMARTeacher/${repository}/tree/${name}|${name}>*`;
     const meta = `>⏰ _${date}_ 👨‍💻 _${user.name || user.login || user.email}_`;

@@ -1,7 +1,6 @@
-const findStaleBranches = require('./findStaleBranches');
-
-const fetchBranches = require('./fetchBranches');
-const filterStaleBranches = require('./filterStaleBranches');
+import findStaleBranches from './findStaleBranches';
+import fetchBranches from './fetchBranches';
+import filterStaleBranches from './filterStaleBranches';
 
 jest.mock('./fetchBranches');
 jest.mock('./filterStaleBranches');

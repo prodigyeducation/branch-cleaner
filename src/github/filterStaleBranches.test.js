@@ -1,4 +1,4 @@
-const filterStaleBranches = require('./filterStaleBranches');
+import filterStaleBranches from './filterStaleBranches';
 
 jest.mock('axios');
 
@@ -31,9 +31,7 @@ describe('filterStaleBranches()', () => {
       const branches = filterStaleBranches({ nodes, defaultBranch });
 
       // then
-      expect(branches.map(({ name }) => name)).toEqual(
-        expect.not.arrayContaining([defaultBranch])
-      );
+      expect(branches.map(({ name }) => name)).toEqual(expect.not.arrayContaining([defaultBranch]));
     });
 
     it('specifed branches', async () => {

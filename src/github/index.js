@@ -1,2 +1,2 @@
-exports.findStaleBranches = require('./findStaleBranches');
-exports.deleteBranch = require('./deleteBranch');
+export { default as findStaleBranches } from './findStaleBranches';
+export { default as deleteBranch } from './deleteBranch';
